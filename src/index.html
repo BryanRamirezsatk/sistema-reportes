@@ -8,14 +8,35 @@
 </head>
 <body>
     <h1>SISTEMA DE REPORTES</h1>
-    <form id="formulario">
-        <label for="usuario">Usuario / Numero de control</label>
-        <input type="text" id="usuario">
-        <label for="contrasena">Contraseña</label>
-        <input type="password" id="contrasena">
-        <button type="submit">INICIAR SESION</button>
-        <div id="mensajeDeError"></div>
-    </form>
+    <div id = "nombreUsuario"></div>
+
+    <section id="login">
+        <form id="formulario">
+            <h2>Inciciar sesión</h2>
+            <label for="usuario">Usuario</label>
+            <input type="text" id="usuario">
+            <label for="contrasena">Contraseña</label>
+            <input type="password" id="contrasena">
+            <button type="submit">INICIAR SESION</button>
+            <div id="mensajeDeError"></div>
+        </form>
+    </section>
+
+    <section id="panelEstudiante">
+        <h2>Que desea realizar ? </h2>
+        
+        <button type ="button" id="verReportes"> VerReportes</button>
+        <button type = "button" id="crearReporte">Crear Nuevo Reporte</button>
+        <button type="button" id = "cerrarSesion">CERRAR SESION</button>
+    </section>
+
+    <section id = panelEstudianteReportes>
+        <h2>Reportes</h2>
+        <button type="button" id = "regresar">Regresar</button>
+        <ul id = "listaReportes">
+
+        </ul>
+    </section>
     <script src="js/datos.js"></script>
     <script src="js/app.js"></script>
 </body>

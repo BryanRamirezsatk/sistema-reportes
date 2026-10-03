@@ -1,0 +1,221 @@
+
+/* =====================================
+    SISTEMA DE REPORTES - DARK MODE
+===================================== */
+
+:root {
+    --fondo: #171c26;
+    --panel: #242c3a;
+    --panel-secundario: #2d3748;
+
+    --texto: #e2e8f0;
+    --texto-secundario: #b6c2d2;
+
+    --azul: #426da3;
+    --azul-hover: #5584bd;
+
+    --borde: #3c485a;
+    --error: #ff8585;
+}
+
+/* CONFIGURACIÓN GENERAL */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: var(--fondo);
+    color: var(--texto);
+
+    margin: 0;
+    padding: 30px;
+
+    min-height: 100vh;
+}
+
+h1 {
+    text-align: center;
+    color: #dce8f7;
+    margin-bottom: 35px;
+    letter-spacing: 1px;
+}
+
+h2 {
+    color: var(--texto);
+    margin-top: 0;
+}
+
+/* SECCIONES */
+
+section {
+    background-color: var(--panel);
+
+    max-width: 850px;
+    margin: 20px auto;
+    padding: 28px;
+
+    border: 1px solid var(--borde);
+    border-radius: 12px;
+
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* FORMULARIOS */
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+label {
+    color: var(--texto-secundario);
+    font-size: 14px;
+    font-weight: bold;
+}
+
+input,
+textarea,
+select {
+    background-color: #1b2230;
+    color: var(--texto);
+
+    border: 1px solid var(--borde);
+    border-radius: 6px;
+
+    padding: 12px;
+    font-size: 15px;
+
+    width: 100%;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    border-color: #6997d0;
+    box-shadow: 0 0 0 2px rgba(105, 151, 208, 0.15);
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: #8291a6;
+}
+
+/* BOTONES */
+
+button {
+    background-color: var(--azul);
+    color: #ffffff;
+
+    border: none;
+    border-radius: 6px;
+
+    padding: 12px 20px;
+    margin: 5px 5px 5px 0;
+
+    font-size: 14px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: background-color 0.2s ease;
+}
+
+button:hover {
+    background-color: var(--azul-hover);
+}
+
+button:active {
+    background-color: #34557f;
+}
+
+/* PANEL DEL USUARIO */
+
+#nombreUsuario {
+    background-color: var(--panel-secundario);
+
+    padding: 14px;
+    margin: 18px 0;
+
+    border-left: 4px solid #6997d0;
+    border-radius: 5px;
+
+    font-weight: bold;
+    color: #dce8f7;
+}
+
+/* LISTA DE REPORTES */
+
+#listaReportes {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* CADA REPORTE */
+
+.tarjeta-reporte {
+    background-color: var(--panel-secundario);
+
+    color: var(--texto-secundario);
+
+    padding: 20px;
+    border-radius: 8px;
+
+    border: 1px solid var(--borde);
+    border-left: 5px solid #6997d0;
+
+    line-height: 1.8;
+    overflow-wrap: anywhere;
+
+    transition: background-color 0.2s ease;
+}
+
+.tarjeta-reporte:hover {
+    background-color: #354256;
+}
+
+/* MENSAJES DE ERROR */
+
+#mensajeDeError {
+    color: var(--error);
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 8px;
+}
+
+/* ELEMENTOS OCULTOS */
+
+[hidden] {
+    display: none !important;
+}
+
+/* ADAPTACIÓN PARA CELULARES */
+
+@media (max-width: 600px) {
+
+    body {
+        padding: 15px;
+    }
+
+    section {
+        padding: 20px;
+        margin: 15px auto;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    button {
+        width: 100%;
+        margin: 5px 0;
+    }
+}

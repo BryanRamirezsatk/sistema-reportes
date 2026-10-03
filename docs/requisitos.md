@@ -4,7 +4,7 @@
 
 ### RF01 - Identificación del usuario
 
-El sistema deberá permitir que los usuarios inicien sesión mediante
+El sistema deberá permitir que los usuarios inicie sesión mediante
 su número de control y contraseña.
 
 ### RF02 - Validación de credenciales
