@@ -132,20 +132,6 @@ button:active {
     background-color: #34557f;
 }
 
-/* PANEL DEL USUARIO */
-
-#nombreUsuario {
-    background-color: var(--panel-secundario);
-
-    padding: 14px;
-    margin: 18px 0;
-
-    border-left: 4px solid #6997d0;
-    border-radius: 5px;
-
-    font-weight: bold;
-    color: #dce8f7;
-}
 
 /* LISTA DE REPORTES */
 
@@ -217,5 +203,1280 @@ button:active {
     button {
         width: 100%;
         margin: 5px 0;
+    }
+}
+
+
+/* ==========================================
+    INFORMACIÓN PÚBLICA DE LOS REPORTES
+========================================== */
+
+/* Separamos los contenedores internos de cada tarjeta */
+
+#listaReportes .tarjeta-reporte div {
+    margin-bottom: 12px;
+    line-height: 1.7;
+}
+
+/* Diferenciamos visualmente la sección de solución */
+
+#listaReportes .tarjeta-reporte div:last-child {
+    border-top: 1px solid #475569;
+    padding-top: 10px;
+    margin-top: 10px;
+}
+
+/* ==========================================
+   BARRA DEL USUARIO ACTIVO
+========================================== */
+
+#usuarioActivo {
+
+    background-color: #2B374B;
+
+    border-left: 4px solid #77A8EC;
+
+    color: #E2E8F0;
+
+    padding: 12px 20px;
+
+    margin: 20px auto;
+
+    width: 90%;
+
+    box-sizing: border-box;
+
+    border-radius: 5px;
+
+    font-size: 16px;
+
+    font-weight: 500;
+
+}
+
+/* Respeta el atributo hidden cuando no hay sesión */
+#usuarioActivo[hidden] {
+    display: none;
+}
+/* =====================================
+   FONDO FOTOGRÁFICO Y LOGIN - V1
+   Una sola definición para evitar conflictos
+===================================== */
+
+/* El fondo se ve detrás del contenido, sin interferir con los clics. */
+#fondoDinamico {
+    position: fixed;
+    inset: 0;
+    background-image: url("./Imagen1.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 1;
+    transition: opacity 0.8s ease-in-out;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* Los paneles permanecen delante de las fotografías. */
+body > :not(#fondoDinamico) {
+    position: relative;
+    z-index: 1;
+}
+
+/* Anulamos SOLO en el login las reglas generales de section. */
+section#login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: none;
+    min-height: calc(100vh - 60px);
+    margin: 0;
+    padding: 24px 16px;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+/* Tarjeta compacta, vertical y semitransparente. */
+section#login form#formulario {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    width: 100%;
+    max-width: 390px;
+    height: auto;
+    margin: 0;
+    padding: 32px;
+    background: rgba(255, 255, 255, 0.88);
+    color: #263043;
+    border: 1px solid rgba(255, 255, 255, 0.65);
+    border-radius: 16px;
+    box-shadow: 0 18px 55px rgba(0, 0, 0, 0.32);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+section#login .encabezado-login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    margin: 0 0 12px;
+    text-align: center;
+}
+
+section#login .logo-login {
+    display: block;
+    width: 150px;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto 8px;
+    object-fit: contain;
+}
+
+section#login .encabezado-login h2 {
+    margin: 0;
+    color: #a32636;
+    font-size: 23px;
+    line-height: 1.2;
+    text-align: center;
+}
+
+section#login .encabezado-login p {
+    margin: 0;
+    color: #475569;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+/* El encabezado propio ya dice Sistema de Reportes. */
+section#login #formulario > h2 {
+    margin: 0 0 8px;
+    color: #263043;
+    font-size: 17px;
+    text-align: center;
+}
+
+section#login label {
+    display: block;
+    margin: 2px 0 0;
+    color: #374151;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+section#login input {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    margin: 0 0 6px;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.94);
+    color: #1f2937;
+    border: 1px solid #b9c2d0;
+    border-radius: 7px;
+}
+
+section#login input:focus {
+    outline: none;
+    border-color: #a32636;
+    box-shadow: 0 0 0 3px rgba(163, 38, 54, 0.14);
+}
+
+section#login button {
+    display: block;
+    width: 100%;
+    margin: 8px 0 0;
+    padding: 13px;
+    background: #a32636;
+    color: #fff;
+    border: none;
+    border-radius: 7px;
+    font-weight: 700;
+}
+
+section#login button:hover { background: #81202c; }
+
+section#login #mensajeDeError {
+    color: #a32636;
+    margin-top: 4px;
+}
+
+@media (max-width: 600px) {
+    section#login { min-height: calc(100vh - 30px); padding: 16px 0; }
+    section#login form#formulario { padding: 24px 20px; }
+}
+/* =====================================
+    ICONOS DE LOS CAMPOS DEL LOGIN
+===================================== */
+
+.campo-login {
+    position: relative;
+    width: 100%;
+}
+
+section#login .campo-login input {
+    width: 100%;
+    padding-right: 45px;
+    margin-bottom: 6px;
+}
+
+.campo-login .icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    color: #747d8c;
+    font-size: 19px;
+
+    pointer-events: none;
+}
+
+.campo-login:focus-within .icon {
+    color: #a32636;
+}
+/* =====================================
+    ANIMACIÓN DE ENTRADA DEL LOGIN
+===================================== */
+
+@keyframes aparecerLogin {
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+section#login form#formulario {
+    animation: aparecerLogin 0.8s ease-out both;
+}
+/* =====================================
+    ANIMACIÓN DEL BOTÓN
+===================================== */
+
+section#login button {
+    transition:
+        background-color 0.3s ease,
+        transform 0.2s ease,
+        box-shadow 0.3s ease;
+}
+
+section#login button:hover {
+    background-color: #7d1e2a;
+    transform: translateY(-3px);
+
+    box-shadow: 0 6px 18px rgba(158, 36, 51, 0.35);
+}
+
+section#login button:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+/* =====================================
+    ANIMACIÓN DE LOS CAMPOS
+===================================== */
+
+section#login input {
+    transition:
+        border-color 0.3s ease,
+        box-shadow 0.3s ease,
+        background-color 0.3s ease;
+}
+
+section#login input:focus {
+    outline: none;
+
+    border-color: #a32636;
+    background-color: #ffffff;
+
+    box-shadow: 0 0 0 4px rgba(163, 38, 54, 0.15);
+}
+/* ACCESIBILIDAD */
+
+@media (prefers-reduced-motion: reduce) {
+    section#login form#formulario {
+        animation: none;
+    }
+
+    section#login input,
+    section#login button {
+        transition: none;
+    }
+}
+/* =====================================
+   BOTÓN PARA MOSTRAR CONTRASEÑA
+===================================== */
+
+section#login .campo-login {
+    position: relative;
+}
+
+section#login .campo-login input {
+    padding-right: 48px;
+}
+
+section#login .campo-login .boton-ojo {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 8px;
+    margin: auto 0;
+    transform: none;
+
+    width: 34px;
+    height: 34px;
+    padding: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+
+    color: #747d8c;
+    cursor: pointer;
+    box-shadow: none;
+}
+section#login .boton-ojo .icon {
+    position: static;
+    transform: none;
+    font-size: 19px;
+}
+
+section#login .campo-login .boton-ojo:hover {
+    background: rgba(163, 38, 54, 0.08);
+    color: #a32636;
+    transform: none;
+    box-shadow: none;
+}
+
+section#login .campo-login .boton-ojo:focus-visible {
+    outline: 2px solid #a32636;
+    outline-offset: 2px;
+}
+/* =====================================
+    PANEL PRINCIPAL DEL ESTUDIANTE
+===================================== */
+
+#panelEstudiante:not([hidden]) {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    max-width: 1050px;
+    width: min(94%, 1050px);
+    margin: 4px auto 30px;
+    padding: 35px;
+
+    background: rgba(255, 255, 255, 0.86);
+    backdrop-filter: blur(12px);
+
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+
+    box-sizing: border-box;
+    animation: aparecerLogin 0.6s ease-out;
+}
+
+#panelEstudiante .encabezado-panel {
+    text-align: center;
+}
+
+#panelEstudiante .encabezado-panel h2 {
+    color: #a32636;
+    margin-bottom: 8px;
+}
+
+#panelEstudiante .encabezado-panel p {
+    color: #536071;
+}
+
+#panelEstudiante .opciones-panel {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
+#panelEstudiante .tarjeta-opcion {
+    min-height: 200px;
+    background: rgba(255, 255, 255, 0.78);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+
+    min-height: 180px;
+    padding: 25px 15px;
+
+    background: #ffffff;
+    color: #273244;
+
+    border: 1px solid #e6d8da;
+    border-radius: 14px;
+
+    cursor: pointer;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+#panelEstudiante .tarjeta-opcion .icon {
+    font-size: 35px;
+    color: #a32636;
+}
+
+#panelEstudiante .tarjeta-opcion span {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+#panelEstudiante .tarjeta-opcion small {
+    font-size: 13px;
+    color: #647084;
+    text-align: center;
+}
+
+#panelEstudiante .tarjeta-opcion:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(163, 38, 54, 0.15);
+}
+
+#panelEstudiante .boton-salir {
+    align-self: flex-end;
+    padding: 12px 18px;
+
+    background: #a32636;
+    color: white;
+
+    border: none;
+    border-radius: 9px;
+    cursor: pointer;
+}
+
+@media (max-width: 600px) {
+    #panelEstudiante .opciones-panel {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #panelEstudiante:not([hidden]) {
+        width: min(94%, 1050px);
+        margin: 6vh auto;
+        padding: 45px;
+        background: rgba(255, 255, 255, 0.78);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+    }
+
+    #panelEstudiante .tarjeta-opcion {
+        min-height: 220px;
+        padding: 30px 20px;
+        background: rgba(255, 255, 255, 0.85);
+    }
+}
+/* =====================================
+    ESTILO DE LOS PANELES INTERNOS V1
+===================================== */
+
+#panelEstudianteReportes:not([hidden]),
+#panelCrearReporte:not([hidden]),
+#panelAdministrador:not([hidden]) {
+    width: min(94%, 1050px);
+    margin: 6vh auto;
+    padding: 40px;
+
+    background: rgba(255, 255, 255, 0.78);
+
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+
+    box-sizing: border-box;
+}
+
+@media (max-width: 600px) {
+    #panelEstudiante:not([hidden]),
+    #panelEstudianteReportes:not([hidden]),
+    #panelCrearReporte:not([hidden]),
+    #panelAdministrador:not([hidden]) {
+        width: 95%;
+        padding: 20px;
+        margin: 20px auto;
+    }
+}
+/* =====================================
+    BARRA DE PERFIL - ESTILO ITCJ
+===================================== */
+
+#usuarioActivo:not([hidden]) {
+    width: min(94%, 1050px);
+    margin: 20px auto 0;
+    padding: 14px 22px;
+    max-width: 1050px;
+    background: rgba(255, 255, 255, 0.85);
+
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+
+    border-radius: 14px;
+    border-left: 5px solid #a32636;
+
+    box-sizing: border-box;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.18);
+}
+
+/* Distribución del perfil */
+
+.perfil-usuario {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Avatar rojo */
+
+.perfil-avatar {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #a32636;
+    border-radius: 50%;
+}
+
+.perfil-avatar .icon {
+    font-size: 25px;
+    color: #ffffff;
+}
+
+/* Nombre y tipo de usuario */
+
+.perfil-informacion {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    flex: 1;
+}
+
+.perfil-informacion strong {
+    color: #222222;
+    font-size: 17px;
+}
+
+.perfil-informacion span {
+    color: #555555;
+    font-size: 13px;
+}
+
+.perfil-informacion span .icon {
+    color: #a32636;
+    margin-right: 5px;
+}
+
+/* Icono de sesión activa */
+
+.perfil-estado .icon {
+    font-size: 23px;
+    color: #a32636;
+}
+#fondoDinamico::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.18);
+    pointer-events: none;
+}
+/* =====================================
+   ENCABEZADO COMPARTIDO DEL SISTEMA
+===================================== */
+
+#usuarioActivo:not([hidden]) {
+    width: min(94%, 1050px);
+    margin: 20px auto 0;
+
+    background: rgba(255, 255, 255, 0.86);
+    border-radius: 20px 20px 0 0;
+
+    border-left: none;
+    border-bottom: 1px solid rgba(163, 38, 54, 0.2);
+
+    box-shadow: none;
+}
+
+/* Panel de estudiante y docente */
+
+#panelEstudiante:not([hidden]) {
+    width: min(94%, 1050px);
+    margin: 0 auto 30px;
+
+    background: rgba(255, 255, 255, 0.86);
+    border-radius: 0 0 20px 20px;
+
+    box-shadow: none;
+}
+
+/* Panel del administrador */
+
+#panelAdministrador:not([hidden]) {
+    width: min(94%, 1050px);
+    margin: 0 auto 30px;
+
+    background: rgba(255, 255, 255, 0.86);
+    border-radius: 0 0 20px 20px;
+
+    box-shadow: none;
+}
+/* ==========================================
+   FORMULARIO PARA GENERAR REPORTES - V1
+========================================== */
+
+#panelCrearReporte:not([hidden]) {
+    width: min(94%, 1050px);
+    margin: 20px auto 40px;
+    padding: 40px;
+
+    background: rgba(255, 255, 255, 0.84);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.22);
+
+    box-sizing: border-box;
+    animation: aparecerReporte 0.5s ease;
+}
+
+/* Título */
+
+#panelCrearReporte h2 {
+    text-align: center;
+    color: #a32636;
+    font-size: 28px;
+    margin-bottom: 30px;
+}
+
+/* Distribución de los campos */
+
+#formularioReporte {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Etiquetas */
+
+#formularioReporte label {
+    color: #242424;
+    font-size: 15px;
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+/* Campos de entrada */
+
+#formularioReporte input[type="text"],
+#formularioReporte select,
+#formularioReporte textarea {
+    width: 100%;
+    padding: 15px;
+
+    background: rgba(255, 255, 255, 0.9);
+    color: #242424;
+
+    border: 1px solid #d7c5c8;
+    border-radius: 10px;
+
+    font: inherit;
+    box-sizing: border-box;
+
+    transition: border-color 0.25s ease,
+                box-shadow 0.25s ease;
+}
+
+/* Al seleccionar un campo */
+
+#formularioReporte input[type="text"]:focus,
+#formularioReporte select:focus,
+#formularioReporte textarea:focus {
+    outline: none;
+    border-color: #a32636;
+    box-shadow: 0 0 0 4px rgba(163, 38, 54, 0.12);
+}
+
+/* Descripción */
+
+#formularioReporte textarea {
+    min-height: 140px;
+    resize: vertical;
+}
+
+/* Evidencia fotográfica */
+
+#formularioReporte input[type="file"] {
+    width: 100%;
+    padding: 16px;
+
+    background: rgba(255, 255, 255, 0.65);
+    border: 2px dashed #c8a8ae;
+    border-radius: 12px;
+
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+#formularioReporte input[type="file"]::file-selector-button {
+    background: #a32636;
+    color: white;
+
+    border: none;
+    border-radius: 7px;
+
+    padding: 10px 15px;
+    margin-right: 15px;
+
+    cursor: pointer;
+}
+
+/* Botón generar reporte */
+
+#formularioReporte button[type="submit"] {
+    padding: 16px;
+    margin-top: 15px;
+
+    background: #a32636;
+    color: white;
+
+    border: none;
+    border-radius: 10px;
+
+    font-size: 16px;
+    font-weight: bold;
+
+    cursor: pointer;
+    transition: transform 0.25s ease,
+                background 0.25s ease;
+}
+
+#formularioReporte button[type="submit"]:hover {
+    background: #851d2b;
+    transform: translateY(-2px);
+}
+
+/* Botón regresar */
+
+#regresarPanel {
+    padding: 13px;
+    background: transparent;
+    color: #a32636;
+
+    border: 1px solid #a32636;
+    border-radius: 10px;
+
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#regresarPanel:hover {
+    background: rgba(163, 38, 54, 0.08);
+}
+
+/* Animación de entrada */
+
+@keyframes aparecerReporte {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Adaptación a pantallas pequeñas */
+
+@media (max-width: 600px) {
+    #panelCrearReporte:not([hidden]) {
+        width: 95%;
+        padding: 22px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #panelCrearReporte:not([hidden]) {
+        animation: none;
+    }
+}
+/* Iconos de las etiquetas del formulario */
+
+#formularioReporte label .icon {
+    color: #a32636;
+    font-size: 19px;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+/* Mejor contraste en la selección de archivos */
+
+#formularioReporte input[type="file"] {
+    color: #333333;
+}
+
+/* Color de los textos de ejemplo */
+
+#formularioReporte input::placeholder,
+#formularioReporte textarea::placeholder {
+    color: #818181;
+    opacity: 1;
+}
+/* Selector de tipo de reporte */
+
+#formularioReporte #tipoReporte {
+    appearance: none;
+    -webkit-appearance: none;
+
+    background-color: rgba(255, 255, 255, 0.92);
+
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23a32636' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    background-size: 20px;
+
+    padding-right: 50px;
+    color: #252525;
+
+    cursor: pointer;
+}
+
+#formularioReporte #tipoReporte:focus {
+    border-color: #a32636;
+    box-shadow: 0 0 0 4px rgba(163, 38, 54, 0.14);
+}
+
+/* Se aplica donde el navegador lo permita */
+
+#tipoReporte option {
+    background-color: #ffffff;
+    color: #252525;
+}
+/* Vista previa de la evidencia */
+
+#vistaPreviaEvidencia:not([hidden]) {
+    margin-top: 12px;
+    padding: 18px;
+
+    background: rgba(255, 255, 255, 0.75);
+    border: 1px solid #e5c8cc;
+    border-radius: 12px;
+}
+
+#vistaPreviaEvidencia p {
+    margin: 0 0 12px;
+    color: #a32636;
+    font-weight: 600;
+}
+
+#imagenVistaPrevia {
+    display: block;
+    width: 100%;
+    max-height: 320px;
+
+    object-fit: contain;
+    border-radius: 10px;
+}
+/* ==========================================
+   SELECTOR PERSONALIZADO - TIPO DE REPORTE
+========================================== */
+
+/* Contenedor del selector */
+.contenedor-tipo-reporte {
+    position: relative;
+    width: 100%;
+}
+
+/* Ocultamos visualmente el selector original,
+   pero lo conservamos para el formulario */
+#tipoReporte {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Botón que reemplaza visualmente al select */
+#abrirTipoReporte {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 100%;
+    padding: 16px 18px;
+
+    background: rgba(255, 255, 255, 0.92);
+    color: #252525;
+
+    border: 1px solid #d7c5c8;
+    border-radius: 10px;
+
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+
+    transition: border-color 0.25s ease,
+                box-shadow 0.25s ease;
+}
+
+/* Efecto al pasar el mouse */
+#abrirTipoReporte:hover {
+    border-color: #a32636;
+}
+
+/* Efecto al seleccionar el botón */
+#abrirTipoReporte:focus-visible {
+    outline: none;
+    border-color: #a32636;
+    box-shadow: 0 0 0 4px rgba(163, 38, 54, 0.14);
+}
+
+/* Flecha roja */
+#abrirTipoReporte .icon {
+    color: #a32636;
+    font-size: 20px;
+}
+
+/* Contenedor de las opciones */
+#opcionesTipoReporte:not([hidden]) {
+    display: flex;
+    flex-direction: column;
+
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+
+    width: 100%;
+    max-height: 250px;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    background: #ffffff;
+    border: 1px solid #e5c8cc;
+    border-radius: 12px;
+
+    padding: 6px;
+    box-sizing: border-box;
+
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+    z-index: 20;
+}
+
+/* Cada opción del menú */
+.opcion-tipo-reporte {
+    width: 100%;
+    padding: 13px 15px;
+
+    background: transparent;
+    color: #252525;
+
+    border: none;
+    border-radius: 8px;
+
+    text-align: left;
+    font: inherit;
+    cursor: pointer;
+}
+
+/* Efecto al pasar el mouse o usar teclado */
+.opcion-tipo-reporte:hover,
+.opcion-tipo-reporte:focus-visible {
+    background: #f5e3e6;
+    color: #a32636;
+    outline: none;
+}
+
+/* Opción seleccionada */
+.opcion-tipo-reporte.seleccionada {
+    background: #f5e3e6;
+    color: #a32636;
+    font-weight: 600;
+}
+/* Respetar los elementos ocultos */
+
+#vistaPreviaEvidencia[hidden] {
+    display: none !important;
+}
+/* Mensaje de confirmación al generar reporte */
+
+#mensajeReporte:not(:empty) {
+    display: block;
+
+    margin-top: 18px;
+    padding: 16px 20px;
+
+    background: rgba(255, 255, 255, 0.9);
+    color: #a32636;
+
+    border: 1px solid #a32636;
+    border-left: 5px solid #a32636;
+    border-radius: 10px;
+
+    font-size: 16px;
+    font-weight: 700;
+    text-align: center;
+
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+/* =========================================
+   NOTIFICACIÓN FLOTANTE DE REPORTES
+========================================= */
+
+.notificacion-reporte {
+    position: fixed;
+    top: 25px;
+    right: 25px;
+
+    width: min(360px, calc(100vw - 40px));
+    padding: 20px;
+
+    background: rgba(255, 255, 255, 0.96);
+    border: 1px solid #e8d5d9;
+    border-left: 5px solid #a32636;
+    border-radius: 14px;
+
+    color: #242424;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.20);
+
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(50px);
+
+    transition:
+        opacity 0.4s ease,
+        transform 0.4s ease,
+        visibility 0.4s ease;
+
+    z-index: 9999;
+    pointer-events: none;
+}
+
+.notificacion-reporte.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+    pointer-events: auto;
+}
+
+.notificacion-reporte i {
+    font-size: 34px;
+    color: #a32636;
+}
+
+.notificacion-reporte strong {
+    display: block;
+    font-size: 17px;
+    margin-bottom: 5px;
+}
+
+.notificacion-reporte p {
+    margin: 0;
+    font-size: 14px;
+    color: #555;
+}
+
+@media (max-width: 480px) {
+    .notificacion-reporte {
+        top: 15px;
+        right: 15px;
+    }
+}
+/* ==========================================
+   CONSULTAR REPORTES - V1
+========================================== */
+
+#panelEstudianteReportes {
+    width: min(92%, 1050px);
+    margin: 35px auto;
+    padding: 40px;
+
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(14px);
+
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 24px;
+
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.18);
+    box-sizing: border-box;
+}
+
+#panelEstudianteReportes[hidden] {
+    display: none !important;
+}
+
+/* Encabezado */
+
+.encabezado-consulta {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.encabezado-consulta > .icon {
+    font-size: 36px;
+    color: #a32338;
+}
+
+.encabezado-consulta h2 {
+    color: #a32338;
+    font-size: 30px;
+    margin: 12px 0;
+}
+
+.encabezado-consulta p {
+    color: #525c6b;
+    font-size: 16px;
+}
+
+/* Buscador */
+
+.buscador-consulta {
+    margin-bottom: 30px;
+}
+
+.buscador-consulta label {
+    display: block;
+    color: #292929;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.buscador-consulta label .icon {
+    color: #a32338;
+    margin-right: 8px;
+}
+
+#panelEstudianteReportes #buscarReporte {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 16px 20px;
+    border: 1px solid #d7c8cb;
+    border-radius: 12px;
+
+    background: #ffffff;
+    color: #252525;
+    font-size: 16px;
+
+    outline: none;
+    transition: border-color 0.25s, box-shadow 0.25s;
+}
+
+#panelEstudianteReportes #buscarReporte:focus {
+    border-color: #a32338;
+    box-shadow: 0 0 0 4px rgba(163, 35, 56, 0.12);
+}
+
+/* Lista */
+
+#listaReportes {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    display: grid;
+    gap: 20px;
+}
+
+/* Tarjetas generadas por JavaScript */
+
+#listaReportes .tarjeta-reporte {
+    background: rgba(255, 255, 255, 0.96);
+    color: #303030;
+
+    border: 1px solid #e6d9dc;
+    border-left: 5px solid #a32338;
+    border-radius: 16px;
+
+    padding: 25px;
+    margin: 0;
+
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.06);
+
+    white-space: pre-line;
+    overflow-wrap: anywhere;
+
+    transition: transform 0.25s, box-shadow 0.25s;
+}
+
+#listaReportes .tarjeta-reporte:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+}
+
+/* Fotografías de evidencia */
+
+#listaReportes .tarjeta-reporte img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    margin-top: 12px;
+}
+
+/* Botón regresar */
+
+#panelEstudianteReportes .boton-regresar-consulta {
+    display: block;
+    margin-top: 30px;
+
+    padding: 14px 28px;
+
+    background: #a32338;
+    color: #ffffff;
+
+    border: none;
+    border-radius: 10px;
+
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+
+    transition: background 0.25s, transform 0.25s;
+}
+
+#panelEstudianteReportes .boton-regresar-consulta:hover {
+    background: #811b2c;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 600px) {
+    #panelEstudianteReportes {
+        width: 94%;
+        padding: 22px;
+    }
+
+    #listaReportes .tarjeta-reporte {
+        padding: 18px;
     }
 }
