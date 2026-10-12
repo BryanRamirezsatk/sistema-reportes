@@ -522,43 +522,205 @@ if (tipoAcceso === "administrador") {
 // Cerramos correctamente el evento del formulario de login
 });
 
+
+/* ==========================================
+   MOSTRAR EVIDENCIAS DEL REPORTE
+========================================== */
+
 function mostrarEvidencia(reporte, tarjeta) {
 
-    // Evidencia del problema
+    // Comprobamos si el reporte tiene fotografías
+    if (!reporte.evidenciaProblema &&
+        !reporte.evidenciaSolucion) {
+
+        return;
+
+    }
+
+    // Contenedor principal de las evidencias
+    const contenedorEvidencias = document.createElement("div");
+
+    contenedorEvidencias.classList.add("contenedor-evidencias");
+
+    // Título general
+    const tituloGeneral = document.createElement("h3");
+
+    tituloGeneral.textContent = "Evidencias del reporte";
+
+    contenedorEvidencias.appendChild(tituloGeneral);
+
+    // Contenedor donde estarán las fotografías
+    const galeria = document.createElement("div");
+
+    galeria.classList.add("galeria-evidencias");
+
+
+    /* ======================================
+       EVIDENCIA DEL PROBLEMA
+    ====================================== */
+
     if (reporte.evidenciaProblema) {
 
-        const titulo = document.createElement("h4");
-        titulo.textContent = "Evidencia del problema:";
+        // Tarjeta de la fotografía
+        const tarjetaProblema = document.createElement("div");
 
+        tarjetaProblema.classList.add("tarjeta-evidencia");
+
+        // Título de la fotografía
+        const titulo = document.createElement("h4");
+
+        titulo.textContent = "Antes de la solución";
+
+        // Imagen del problema
         const imagen = document.createElement("img");
+
         imagen.src = reporte.evidenciaProblema;
         imagen.alt = "Fotografía del problema";
 
-        imagen.style.width = "250px";
-        imagen.style.maxWidth = "100%";
-        imagen.style.height = "auto";
+        // Agregamos los elementos
+        tarjetaProblema.appendChild(titulo);
+        tarjetaProblema.appendChild(imagen);
+        // Permitimos ampliar la fotografía al hacer clic
+        imagen.classList.add("imagen-ampliable");
 
-        tarjeta.appendChild(titulo);
-        tarjeta.appendChild(imagen);
+        imagen.addEventListener("click", function() {
+
+        ampliarImagen(imagen.src, imagen.alt);
+
+        });
+        galeria.appendChild(tarjetaProblema);
+
     }
 
-    // Evidencia de la solución
+
+    /* ======================================
+       EVIDENCIA DE LA SOLUCIÓN
+    ====================================== */
+
     if (reporte.evidenciaSolucion) {
 
-        const titulo = document.createElement("h4");
-        titulo.textContent = "Evidencia de la solución:";
+        // Tarjeta de la fotografía
+        const tarjetaSolucion = document.createElement("div");
 
+        tarjetaSolucion.classList.add("tarjeta-evidencia");
+
+        // Título de la fotografía
+        const titulo = document.createElement("h4");
+
+        titulo.textContent = "Después de la solución";
+
+        // Imagen de la solución
         const imagen = document.createElement("img");
+
         imagen.src = reporte.evidenciaSolucion;
         imagen.alt = "Fotografía de la solución";
+        /* ======================================
+            AMPLIAR EVIDENCIA DE LA SOLUCIÓN
+        ====================================== */
 
-        imagen.style.width = "250px";
-        imagen.style.maxWidth = "100%";
-        imagen.style.height = "auto";
+         // Indicamos que la fotografía es interactiva
+            imagen.classList.add("imagen-ampliable");
 
-        tarjeta.appendChild(titulo);
-        tarjeta.appendChild(imagen);
+          // Abrimos la fotografía cuando hacemos clic
+            imagen.addEventListener("click", function() {
+
+            ampliarImagen(imagen.src, imagen.alt);
+
+});
+
+        // Agregamos los elementos
+        tarjetaSolucion.appendChild(titulo);
+        tarjetaSolucion.appendChild(imagen);
+
+        galeria.appendChild(tarjetaSolucion);
+
     }
+
+    // Agregamos la galería al contenedor principal
+    contenedorEvidencias.appendChild(galeria);
+
+    // Insertamos las evidencias en el reporte
+    tarjeta.appendChild(contenedorEvidencias);
+
+}
+
+
+/* ==========================================
+   AMPLIAR FOTOGRAFÍAS DE EVIDENCIAS
+========================================== */
+
+function ampliarImagen(rutaImagen, descripcion) {
+
+    // Creamos el fondo oscuro
+    const fondo = document.createElement("div");
+
+    fondo.classList.add("fondo-imagen-ampliada");
+
+    // Creamos la fotografía ampliada
+    const imagen = document.createElement("img");
+
+    imagen.src = rutaImagen;
+    imagen.alt = descripcion;
+
+    // Creamos el botón para cerrar
+    const cerrar = document.createElement("button");
+    
+/* ==========================================
+   CERRAR FOTOGRAFÍA CON ANIMACIÓN
+========================================== */
+
+function cerrarImagen() {
+
+    // Evitamos ejecutar el cierre varias veces
+    if (fondo.classList.contains("cerrando")) {
+        return;
+    }
+
+    // Activamos la animación de salida
+    fondo.classList.add("cerrando");
+
+    // Esperamos a que termine la animación
+    fondo.addEventListener("animationend", function(event) {
+
+        // Solo atendemos la animación del fondo
+        if (event.target !== fondo) {
+            return;
+        }
+
+        // Eliminamos el visualizador
+        fondo.remove();
+
+        // Restauramos el desplazamiento
+        document.body.style.overflow = "";
+
+    }, { once: true });
+
+}
+
+    cerrar.textContent = "×";
+    cerrar.classList.add("cerrar-imagen");
+
+    // Cerramos al presionar el botón
+    cerrar.addEventListener("click", function() {
+
+        cerrarImagen()
+    });
+
+    // Cerramos al hacer clic fuera de la fotografía
+    fondo.addEventListener("click", function(event) {
+
+        cerrarImagen()
+    });
+
+    // Agregamos los elementos al fondo
+    fondo.appendChild(imagen);
+    fondo.appendChild(cerrar);
+
+    // Mostramos la fotografía ampliada
+    document.body.appendChild(fondo);
+    // Evitamos que la página se desplace mientras vemos la imagen
+    document.body.style.overflow = "hidden";
+
 }
 /* =========================================
    NOTIFICACIÓN DE REPORTE GENERADO
@@ -580,11 +742,29 @@ function mostrarNotificacionReporte(folio) {
 
     const contenido = document.createElement("div");
 
-    const titulo = document.createElement("strong");
+    // Creamos el título de la notificación
+const titulo = document.createElement("strong");
+
+// Creamos la descripción de la notificación
+const descripcion = document.createElement("p");
+
+// Elegimos el mensaje dependiendo de la acción realizada
+if (tipo === "solucion") {
+
+    titulo.textContent = "¡Reporte solucionado!";
+
+    descripcion.textContent =
+        "La solución del folio #" + folio +
+        " se registró correctamente.";
+
+} else {
+
     titulo.textContent = "¡Reporte registrado!";
 
-    const descripcion = document.createElement("p");
-    descripcion.textContent = "Tu reporte se generó correctamente. Folio: " + folio;
+    descripcion.textContent =
+        "Tu reporte se generó correctamente. Folio: " + folio;
+
+}
 
     contenido.appendChild(titulo);
     contenido.appendChild(descripcion);
@@ -659,65 +839,213 @@ function mostrarReportesEstudiante() {
         nuevo.className = "tarjeta-reporte";
 
 
-        /* ==================================
-            MOSTRAR INFORMACIÓN DEL REPORTE
-        ================================== */
+/* ==========================================
+   INFORMACIÓN GENERAL DEL REPORTE
+========================================== */
 
-        // Creamos un contenedor para los datos
-        const informacion = document.createElement("div");
+// Creamos el contenedor principal
+const informacion = document.createElement("div");
 
-        // Mostramos la información general
-        informacion.textContent =
-            "Folio: " + reporte.numeroFolio +
-            "\nLugar: " + reporte.lugar +
-            "\nTipo: " + reporte.tipo +
-            "\nDescripción: " + reporte.descripcion +
-            "\nFecha de creación: " +
-            reporte.fecha.toLocaleDateString() +
-            "\nFecha límite: " +
-            reporte.fechaLimite.toLocaleDateString() +
-            "\nEstado: " + reporte.estado;
-
-        // Conservamos los saltos de línea del texto
-        informacion.style.whiteSpace = "pre-line";
-
-        // Insertamos la información en nuestra tarjeta
-        nuevo.appendChild(informacion);
+informacion.classList.add("informacion-reporte");
 
 
-        /* ==================================
-            MOSTRAR SOLUCIÓN DEL REPORTE
-        ================================== */
+/* ==========================================
+   ENCABEZADO: FOLIO Y ESTADO
+========================================== */
 
-        // Creamos otro contenedor para la solución
-        const informacionSolucion = document.createElement("div");
+// Creamos el encabezado
+const encabezado = document.createElement("div");
 
-        // Comprobamos si el administrador ya registró
-        // una solución para este reporte
+encabezado.classList.add("encabezado-reporte");
 
-        if (reporte.solucion !== "") {
+// Mostramos el número de folio
+const folio = document.createElement("h3");
 
-            // Si existe una solución, la mostramos
-            informacionSolucion.textContent =
-                "\nSolución registrada: " +
-                reporte.solucion +
-                "\nFecha de solución: " +
-                reporte.fechaSolucion.toLocaleDateString();
+folio.textContent = "Folio #" + reporte.numeroFolio;
 
-        } else {
+// Mostramos el estado actual
+const estado = document.createElement("span");
 
-            // Si todavía no tiene solución,
-            // mostramos un mensaje informativo
-            informacionSolucion.textContent =
-                "\nSolución: Pendiente de atención";
+estado.textContent = reporte.estado;
 
-        }
+estado.classList.add("estado-reporte");
 
-        // Conservamos los saltos de línea
-        informacionSolucion.style.whiteSpace = "pre-line";
+// Asignamos una clase según el estado
+if (reporte.estado === "Resuelto") {
 
-        // Insertamos la información de la solución
-        nuevo.appendChild(informacionSolucion);
+    estado.classList.add("estado-resuelto");
+
+} else if (reporte.estado === "Pendiente") {
+
+    estado.classList.add("estado-pendiente");
+
+} else {
+
+    estado.classList.add("estado-vencido");
+
+}
+
+// Agregamos el folio y estado al encabezado
+encabezado.appendChild(folio);
+encabezado.appendChild(estado);
+
+
+/* ==========================================
+   RESTO DE LA INFORMACIÓN
+========================================== */
+
+
+/* ==========================================
+   DETALLES DEL REPORTE
+========================================== */
+
+// Contenedor de todas las propiedades
+const detalles = document.createElement("div");
+
+detalles.classList.add("detalles-reporte");
+
+
+/* ==========================================
+   FUNCIÓN PARA CREAR CAMPOS
+========================================== */
+
+// Crea un campo con su título y su valor
+function crearCampo(titulo, valor) {
+
+    const campo = document.createElement("div");
+    campo.classList.add("campo-reporte");
+
+    const etiqueta = document.createElement("strong");
+    etiqueta.textContent = titulo;
+
+    const contenido = document.createElement("p");
+    contenido.textContent = valor;
+
+    campo.appendChild(etiqueta);
+    campo.appendChild(contenido);
+
+    return campo;
+
+}
+
+
+/* ==========================================
+   INFORMACIÓN GENERAL
+========================================== */
+
+// Lugar de la incidencia
+detalles.appendChild(
+    crearCampo("LUGAR", reporte.lugar)
+);
+
+// Tipo de incidencia
+detalles.appendChild(
+    crearCampo("TIPO DE INCIDENCIA", reporte.tipo)
+);
+
+// Fecha de creación
+detalles.appendChild(
+    crearCampo(
+        "FECHA DE CREACIÓN",
+        reporte.fecha.toLocaleDateString()
+    )
+);
+
+// Fecha límite
+detalles.appendChild(
+    crearCampo(
+        "FECHA LÍMITE",
+        reporte.fechaLimite.toLocaleDateString()
+    )
+);
+
+
+/* ==========================================
+   DESCRIPCIÓN DEL PROBLEMA
+========================================== */
+
+// Contenedor independiente
+const descripcion = crearCampo(
+    "DESCRIPCIÓN DEL PROBLEMA",
+    reporte.descripcion
+);
+
+descripcion.classList.add("descripcion-reporte");
+
+detalles.appendChild(descripcion);
+
+// Construimos la información
+informacion.appendChild(encabezado);
+informacion.appendChild(detalles);
+
+// Agregamos todo a la tarjeta
+nuevo.appendChild(informacion);
+
+        
+/* ==========================================
+   MOSTRAR SOLUCIÓN DEL REPORTE
+========================================== */
+
+// Creamos el contenedor de la solución
+const informacionSolucion = document.createElement("div");
+
+informacionSolucion.classList.add("solucion-reporte");
+
+
+/* ==========================================
+   TÍTULO DE LA SOLUCIÓN
+========================================== */
+
+const tituloSolucion = document.createElement("h3");
+
+tituloSolucion.textContent = "Solución del reporte";
+
+informacionSolucion.appendChild(tituloSolucion);
+
+
+/* ==========================================
+   COMPROBAR SI EXISTE UNA SOLUCIÓN
+========================================== */
+
+if (reporte.solucion !== "") {
+
+    // Título de la descripción
+    const etiquetaSolucion = document.createElement("strong");
+
+    etiquetaSolucion.textContent = "DESCRIPCIÓN DE LA SOLUCIÓN";
+
+    // Texto registrado por el administrador
+    const textoSolucion = document.createElement("p");
+
+    textoSolucion.textContent = reporte.solucion;
+
+    // Fecha de solución
+    const fechaSolucion = document.createElement("div");
+
+    fechaSolucion.classList.add("fecha-solucion");
+
+    fechaSolucion.textContent =
+        "Fecha de solución: " +
+        reporte.fechaSolucion.toLocaleDateString();
+
+    // Agregamos los elementos
+    informacionSolucion.appendChild(etiquetaSolucion);
+    informacionSolucion.appendChild(textoSolucion);
+    informacionSolucion.appendChild(fechaSolucion);
+
+} else {
+
+    // Mensaje para reportes sin resolver
+    const pendiente = document.createElement("p");
+
+    pendiente.textContent = "Pendiente de atención";
+
+    informacionSolucion.appendChild(pendiente);
+
+}
+
+// Insertamos la solución en la tarjeta
+nuevo.appendChild(informacionSolucion);
         // Mostrar fotografía del problema
         mostrarEvidencia(reporte, nuevo);
 
@@ -932,6 +1260,8 @@ function mostrarTemporizador(reporte, tarjeta) {
 
     // Creamos un elemento para mostrar el tiempo
     const temporizador = document.createElement("p");
+    // Clase para personalizar el contador desde CSS
+    temporizador.classList.add("contador-reporte");
 
     // Identificamos el temporizador con su folio
     temporizador.dataset.temporizador = reporte.numeroFolio;
@@ -1015,23 +1345,120 @@ function mostrarReportesAdmin() {
         // Asignamos una clase para aplicar CSS
         nuevo.className = "tarjeta-reporte";
 
+        // ==========================================
+// INFORMACIÓN GENERAL DEL REPORTE
+// ==========================================
 
-        /* ==================================
-            INFORMACIÓN DEL REPORTE
-        ================================== */
+// Contenedor principal
+const informacion = document.createElement("div");
+informacion.classList.add("informacion-reporte");
 
-        // Creamos un contenedor para mostrar los datos
-        const informacion = document.createElement("div");
+// ==========================================
+// ENCABEZADO: FOLIO Y ESTADO
+// ==========================================
 
-        // Mostramos los datos del reporte
-        informacion.textContent =
-            "Folio: " + reporte.numeroFolio +
-            " | Lugar: " + reporte.lugar +
-            " | Tipo: " + reporte.tipo +
-            " | Descripción: " + reporte.descripcion +
-            " | Estado: " + reporte.estado +
-            " | Fecha límite: " +
-            reporte.fechaLimite.toLocaleDateString();
+const encabezado = document.createElement("div");
+encabezado.classList.add("encabezado-reporte");
+
+// Folio destacado
+const folio = document.createElement("h3");
+folio.textContent = "Folio #" + reporte.numeroFolio;
+
+// Estado del reporte
+const estado = document.createElement("span");
+estado.textContent = reporte.estado;
+estado.classList.add("estado-reporte");
+
+// Aplicamos el color correspondiente
+if (reporte.estado === "Resuelto") {
+
+    estado.classList.add("estado-resuelto");
+
+} else if (reporte.estado === "Pendiente") {
+
+    estado.classList.add("estado-pendiente");
+
+} else {
+
+    estado.classList.add("estado-vencido");
+
+}
+
+// Agregamos folio y estado
+encabezado.appendChild(folio);
+encabezado.appendChild(estado);
+
+// ==========================================
+// DETALLES DEL REPORTE
+// ==========================================
+
+const detalles = document.createElement("div");
+detalles.classList.add("detalles-reporte");
+
+// Función para crear un campo con título y valor
+function crearCampo(titulo, valor) {
+
+    const campo = document.createElement("div");
+    campo.classList.add("campo-reporte");
+
+    const etiqueta = document.createElement("strong");
+    etiqueta.textContent = titulo;
+
+    const contenido = document.createElement("p");
+    contenido.textContent = valor;
+
+    campo.appendChild(etiqueta);
+    campo.appendChild(contenido);
+
+    return campo;
+}
+
+// Lugar
+detalles.appendChild(
+    crearCampo("LUGAR", reporte.lugar)
+);
+
+// Tipo de incidencia
+detalles.appendChild(
+    crearCampo("TIPO DE INCIDENCIA", reporte.tipo)
+);
+
+// Fecha de creación
+detalles.appendChild(
+    crearCampo(
+        "FECHA DE CREACIÓN",
+        reporte.fecha.toLocaleDateString()
+    )
+);
+
+// Fecha límite
+detalles.appendChild(
+    crearCampo(
+        "FECHA LÍMITE",
+        reporte.fechaLimite.toLocaleDateString()
+    )
+);
+
+// ==========================================
+// DESCRIPCIÓN DEL PROBLEMA
+// ==========================================
+
+const descripcion = crearCampo(
+    "DESCRIPCIÓN DEL PROBLEMA",
+    reporte.descripcion
+);
+
+// La descripción ocupará todo el ancho
+descripcion.classList.add("descripcion-reporte");
+
+detalles.appendChild(descripcion);
+
+// ==========================================
+// CONSTRUIR LA TARJETA
+// ==========================================
+
+informacion.appendChild(encabezado);
+informacion.appendChild(detalles);
 
 
         /* ==================================
@@ -1040,7 +1467,8 @@ function mostrarReportesAdmin() {
 
         // Creamos un botón para cada reporte
         const botonSolucionar = document.createElement("button");
-
+        // Aplicamos el estilo institucional al botón
+        botonSolucionar.classList.add("boton-admin-reporte");
         // Definimos su texto
         botonSolucionar.textContent = "SOLUCIONAR REPORTE";
 
@@ -1115,6 +1543,50 @@ function mostrarReportesAdmin() {
         nuevo.appendChild(informacion);
         // Mostrar fotografía del problema
         mostrarEvidencia(reporte, nuevo);
+        /* ==========================================
+   DESCRIPCIÓN DE LA SOLUCIÓN - ADMINISTRADOR
+========================================== */
+
+// Comprobamos que el reporte tenga una solución registrada
+if (reporte.solucion && reporte.solucion.trim() !== "") {
+
+    // Creamos el contenedor de la solución
+    const informacionSolucionAdmin = document.createElement("div");
+
+    // Clase para aplicar estilos desde CSS
+    informacionSolucionAdmin.classList.add("solucion-reporte-admin");
+
+    // Creamos el título
+    const tituloSolucionAdmin = document.createElement("strong");
+
+    tituloSolucionAdmin.textContent = "DESCRIPCIÓN DE LA SOLUCIÓN";
+
+    // Creamos el texto de la solución
+    const textoSolucionAdmin = document.createElement("p");
+
+    textoSolucionAdmin.textContent = reporte.solucion;
+
+    // Agregamos el título y la descripción
+    informacionSolucionAdmin.appendChild(tituloSolucionAdmin);
+    informacionSolucionAdmin.appendChild(textoSolucionAdmin);
+
+    // Mostramos la fecha cuando esté registrada
+    if (reporte.fechaSolucion) {
+
+        const fechaSolucionAdmin = document.createElement("p");
+
+        fechaSolucionAdmin.classList.add("fecha-solucion-admin");
+
+        fechaSolucionAdmin.textContent =
+            "Fecha de solución: " +
+            new Date(reporte.fechaSolucion).toLocaleDateString();
+
+        informacionSolucionAdmin.appendChild(fechaSolucionAdmin);
+    }
+
+    // Insertamos la solución dentro de la tarjeta
+    nuevo.appendChild(informacionSolucionAdmin);
+}
         mostrarTemporizador(reporte, nuevo);
        // Solamente mostramos el botón si el reporte
        // todavía no tiene una solución registrada
@@ -1234,7 +1706,46 @@ nuevoTipo.addEventListener("change", function() {
     }
 
 });
+// ==========================================
+// OBSERVADOR DE ALERTAS DEL REGISTRO
+// ==========================================
 
+// Obtenemos el elemento donde aparecen los mensajes
+const mensajeRegistroUsuario =
+    document.getElementById("mensajeNuevoUsuario");
+
+// Creamos el observador una sola vez
+const observadorMensaje = new MutationObserver(function () {
+
+    // Quitamos los estilos anteriores
+    mensajeRegistroUsuario.classList.remove("aviso-exito");
+    mensajeRegistroUsuario.classList.remove("aviso-error");
+
+    // Si no hay mensaje, terminamos
+    if (mensajeRegistroUsuario.textContent.trim() === "") {
+        return;
+    }
+
+    // Comprobamos si el mensaje indica un registro exitoso
+    if (mensajeRegistroUsuario.textContent.toLowerCase().includes("correctamente")) {
+
+        mensajeRegistroUsuario.classList.add("aviso-exito");
+
+    } else {
+
+        // Aplicamos la alerta roja a los errores
+        mensajeRegistroUsuario.classList.add("aviso-error");
+
+    }
+
+});
+
+// Comenzamos a observar los cambios del mensaje
+observadorMensaje.observe(mensajeRegistroUsuario, {
+    childList: true,
+    characterData: true,
+    subtree: true
+});
 
 /* ==========================================
     FORMULARIO PARA REGISTRAR USUARIOS
@@ -1260,6 +1771,17 @@ formularioNuevoUsuario.addEventListener("submit", function(event) {
     const mensaje =
         document.getElementById("mensajeNuevoUsuario");
 
+     // ==========================================
+    // LIMPIAR LAS ALERTAS ANTERIORES
+    // ==========================================
+
+    // Eliminamos el mensaje anterior
+    mensaje.textContent = "";
+
+    // Quitamos los estilos de éxito y error
+    mensaje.classList.remove("aviso-exito");
+    mensaje.classList.remove("aviso-error");
+
     // Limpiamos mensajes anteriores
     mensaje.textContent = "";
 
@@ -1273,6 +1795,22 @@ formularioNuevoUsuario.addEventListener("submit", function(event) {
         mensaje.textContent = "Complete todos los campos";
         return;
 
+    }
+    // ==========================================
+    // VALIDACIÓN DEL NOMBRE DEL USUARIO
+    // ==========================================
+
+    // Comprobamos si el nombre contiene solamente números
+    if (/^\d+$/.test(nombre)) {
+
+    // Mostramos el mensaje de error
+    mensaje.textContent = "El nombre del usuario no puede ser numérico";
+
+    // Aplicamos el estilo de alerta roja
+    mensaje.classList.add("aviso-error");
+
+    // Detenemos el registro para evitar guardar datos inválidos
+    return;
     }
 
 
@@ -1494,6 +2032,9 @@ formularioNuevoAdministrador.addEventListener("submit", function(event) {
 
     // Limpiamos cualquier mensaje anterior
     mensaje.textContent = "";
+    // Eliminamos los estilos de alertas anteriores
+    mensaje.classList.remove("aviso-exito");
+    mensaje.classList.remove("aviso-error");
 
 
     /* ======================================
@@ -1502,9 +2043,14 @@ formularioNuevoAdministrador.addEventListener("submit", function(event) {
 
     // Comprobamos que ambos campos tengan información
     if (nombre === "" || contrasena === "") {
+    
+        // Mostramos el mensaje de error
+    mensaje.textContent = "Debes completar todos los campos";
+       // Aplicamos el diseño de alerta roja
+    mensaje.classList.add("aviso-error");
 
-        mensaje.textContent = "Error Campos Vacíos";
-        return;
+return;
+
 
     }
 
@@ -1519,12 +2065,13 @@ formularioNuevoAdministrador.addEventListener("submit", function(event) {
 
     if (!isNaN(nombre)) {
 
-        mensaje.textContent =
-            "El nombre del administrador no puede ser numérico";
+    mensaje.textContent =
+        "El nombre del administrador no puede ser numérico";
+        // Aplicamos el diseño de la tarjeta roja
+    mensaje.classList.add("aviso-error");
 
-        return;
-
-    }
+    return;
+}
 
 
     /* ======================================
@@ -1582,7 +2129,12 @@ formularioNuevoAdministrador.addEventListener("submit", function(event) {
 
     if (duplicado === true) {
 
+        // Mostramos el mensaje cuando el administrador ya existe
         mensaje.textContent = "El nombre de usuario ya existe";
+
+        // Aplicamos el diseño de alerta de error
+        mensaje.classList.add("aviso-error");
+
         return;
 
     }
@@ -1610,6 +2162,8 @@ formularioNuevoAdministrador.addEventListener("submit", function(event) {
 
     // Mostramos un mensaje de confirmación
     mensaje.textContent = "Administrador registrado correctamente";
+    // Aplicamos el diseño de alerta verde
+    mensaje.classList.add("aviso-exito");
 
     // Limpiamos los campos después de registrar
     formularioNuevoAdministrador.reset();
@@ -2134,6 +2688,21 @@ formularioSolucion.addEventListener("submit", async function(event) {
 
     // Limpiamos el formulario
     formularioSolucion.reset();
+    // Ocultamos el panel de solucionar reportes
+panelSolucionReporte.hidden = true;
+
+// Mostramos nuevamente la lista administrativa
+panelReportesAdmin.hidden = false;
+
+// Actualizamos la lista para mostrar el reporte solucionado
+
+    // 9. Actualizar las tarjetas con el nuevo estado del reporte
+mostrarReportesAdmin();
+// Mostramos la notificación de solución registrada
+mostrarNotificacionReporte(
+    reporteSeleccionado.numeroFolio,
+    "solucion"
+);
 
 });
 
@@ -2175,38 +2744,54 @@ setInterval(function() {
 
 //Intereccion del estilo de la pagina
 //--------------------------------------------------------------------------------------------
-// =====================================
+// ======================================
 // CARRUSEL DE FOTOGRAFÍAS
-// =====================================
+// ======================================
 
+// Fotografías disponibles
 const imagenesFondo = [
-    "css/Imagen1.jpg",
+    "css/imagen1.jpg",
     "css/imagen2.jpg",
-    "css/imagen3.jpg"
+    "css/imagen3.jpg",
+    "css/imagen4.jpg"
+
 ];
 
+// Posición de la fotografía actual
 let indiceFondo = 0;
 
+// Obtenemos las dos capas del fondo
 const fondoDinamico = document.getElementById("fondoDinamico");
+const fondoSiguiente = document.getElementById("fondoSiguiente");
 
+// Mostramos la primera fotografía
+fondoDinamico.style.backgroundImage =
+    `url("${imagenesFondo[indiceFondo]}")`;
+
+// Cambiamos la fotografía cada 6 segundos
 setInterval(function() {
 
-    // Ocultar suavemente la imagen actual
-    fondoDinamico.style.opacity = "0";
+    // Seleccionamos la siguiente fotografía
+    indiceFondo = (indiceFondo + 1) % imagenesFondo.length;
 
+    // Preparamos la fotografía en la segunda capa
+    fondoSiguiente.style.backgroundImage =
+        `url("${imagenesFondo[indiceFondo]}")`;
+
+    // Iniciamos el desvanecimiento
+    fondoSiguiente.style.opacity = "1";
+
+    // Esperamos a que termine la transición
     setTimeout(function() {
 
-        // Pasar a la siguiente imagen
-        indiceFondo = (indiceFondo + 1) % imagenesFondo.length;
-
-        // Cambiar la fotografía
+        // Actualizamos la fotografía principal
         fondoDinamico.style.backgroundImage =
             `url("${imagenesFondo[indiceFondo]}")`;
 
-        // Mostrar la fotografía nueva
-        fondoDinamico.style.opacity = "1";
+        // Ocultamos nuevamente la segunda capa
+        fondoSiguiente.style.opacity = "0";
 
-    }, 1000);
+    }, 1500);
 
 }, 6000);
 // =====================================
@@ -2242,5 +2827,133 @@ botonOjo.addEventListener("click", function() {
         botonOjo.setAttribute("aria-pressed", "false");
 
     }
+
+});
+// ==========================================
+// SELECTOR PERSONALIZADO - TIPO DE USUARIO
+// ==========================================
+
+// Obtenemos los elementos del HTML
+const botonTipoUsuario = document.getElementById("botonTipoUsuario");
+const opcionesTipoUsuario = document.getElementById("opcionesTipoUsuario");
+const textoTipoUsuario = document.getElementById("textoTipoUsuario");
+
+
+// Abrimos o cerramos el menú al presionar el botón
+botonTipoUsuario.addEventListener("click", function () {
+
+    if (opcionesTipoUsuario.hidden) {
+
+        opcionesTipoUsuario.hidden = false;
+        botonTipoUsuario.setAttribute("aria-expanded", "true");
+
+    } else {
+
+        opcionesTipoUsuario.hidden = true;
+        botonTipoUsuario.setAttribute("aria-expanded", "false");
+
+    }
+
+});
+
+// Obtenemos las opciones del menú
+const botonesOpciones = opcionesTipoUsuario.querySelectorAll("button");
+
+// Recorremos las opciones
+botonesOpciones.forEach(function (opcion) {
+
+    opcion.addEventListener("click", function () {
+
+        // Obtenemos el tipo seleccionado
+        const tipoSeleccionado = opcion.dataset.tipo;
+
+        // Actualizamos el select original
+        nuevoTipo.value = tipoSeleccionado;
+
+        // Avisamos al programa que cambió el tipo de usuario
+        nuevoTipo.dispatchEvent(new Event("change", { bubbles: true }));
+
+        // Mostramos el texto seleccionado
+        textoTipoUsuario.textContent = opcion.textContent.trim();
+
+        // Cerramos el menú
+        opcionesTipoUsuario.hidden = true;
+        botonTipoUsuario.setAttribute("aria-expanded", "false");
+
+    });
+
+});
+
+// Cerramos el menú al hacer clic fuera de él
+document.addEventListener("click", function (evento) {
+
+    if (!evento.target.closest(".selector-personalizado")) {
+
+        opcionesTipoUsuario.hidden = true;
+        botonTipoUsuario.setAttribute("aria-expanded", "false");
+
+    }
+
+});
+
+// Cerramos el menú al presionar Escape
+document.addEventListener("keydown", function (evento) {
+
+    if (evento.key === "Escape") {
+
+        opcionesTipoUsuario.hidden = true;
+        botonTipoUsuario.setAttribute("aria-expanded", "false");
+
+    }
+
+});
+// ==========================================
+// VISTA PREVIA DE LA IMAGEN DE SOLUCIÓN
+// ==========================================
+
+// Obtenemos los elementos del HTML
+const evidenciaSolucionInput = document.getElementById("evidenciaSolucion");
+
+const vistaPreviaSolucion = document.getElementById("vistaPreviaSolucion");
+
+const imagenPreviaSolucion = document.getElementById("imagenPreviaSolucion");
+
+// Escuchamos cuando el administrador selecciona una imagen
+evidenciaSolucionInput.addEventListener("change", function() {
+
+    // Obtenemos el archivo seleccionado
+    const archivo = evidenciaSolucionInput.files[0];
+
+    // Si no seleccionó ninguna imagen, ocultamos la vista previa
+    if (!archivo) {
+        imagenPreviaSolucion.removeAttribute("src");
+        vistaPreviaSolucion.hidden = true;
+        return;
+    }
+
+    // Comprobamos que el archivo sea una imagen permitida
+    if (
+        archivo.type !== "image/png" &&
+        archivo.type !== "image/jpeg" &&
+        archivo.type !== "image/webp"
+    ) {
+        imagenPreviaSolucion.removeAttribute("src");
+        vistaPreviaSolucion.hidden = true;
+        return;
+    }
+
+    // Creamos una dirección temporal para mostrar la fotografía
+    const direccionImagen = URL.createObjectURL(archivo);
+
+    // Mostramos la fotografía seleccionada
+    imagenPreviaSolucion.src = direccionImagen;
+
+    // Hacemos visible el contenedor
+    vistaPreviaSolucion.hidden = false;
+
+    // Liberamos la dirección temporal después de cargar la imagen
+    imagenPreviaSolucion.onload = function() {
+        URL.revokeObjectURL(direccionImagen);
+    };
 
 });
