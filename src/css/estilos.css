@@ -271,7 +271,7 @@ button:active {
     position: fixed;
     inset: 0;
 
-    background-image: url("./Imagen1.jpg");
+    background-image: url("./imagen1.jpg");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
