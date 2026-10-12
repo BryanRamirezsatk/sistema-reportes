@@ -2750,7 +2750,7 @@ setInterval(function() {
 
 // Fotografías disponibles
 const imagenesFondo = [
-    "css/imagen1.jpg",
+    "css/Imagen1.jpg",
     "css/imagen2.jpg",
     "css/imagen3.jpg",
     "css/imagen4.jpg"
