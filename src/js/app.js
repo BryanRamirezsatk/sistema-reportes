@@ -728,7 +728,7 @@ function cerrarImagen() {
 
 let temporizadorNotificacion;
 
-function mostrarNotificacionReporte(folio) {
+function mostrarNotificacionReporte(folio,tipo = "nuevo") {
 
     const notificacion = document.getElementById("notificacionReporte");
 
